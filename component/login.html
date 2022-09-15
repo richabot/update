@@ -1,0 +1,121 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User | Login</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container">
+
+
+        <div class="card m-5 text-center shadow gradient">
+            <div class="card gradient1">
+                <div class="card-body">
+                    <h4 class="card-title text-uppercase font-weight-bold font-italic">Food Adda</h4>
+                    <h4 class="card-title">Login Portal</h4>
+                    <p class="card-text">
+                    <form>
+                        <input placeholder="username" type="text" name="username"
+                            class="p-3 m-2 rounded-pill border-top-0 border-right-0 border-left-0" /> <br>
+                        <input placeholder="password" type="password" name="password"
+                            class="p-3 m-2 rounded-pill border-top-0 border-right-0 border-left-0" /> <br>
+                        <input type="submit" value="Get Inside" class="p-3 btn rounded-pill border-0 bg-warning" />
+                    </form>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+    <script type="text/javascript" src="user.js"></script>
+</body>
+
+</html>
+<script>
+    window.onload = function () {
+    var form = document.querySelector('form')
+    form.addEventListener('submit', registerUser)
+}
+
+function registerUser() {
+    event.preventDefault()
+    var elems = event.target.querySelectorAll('input')
+
+    var username = elems[0].value
+    var password = elems[1].value
+
+    var payload = {
+        username: username,
+        password: password
+    }
+
+    console.log(username, password)
+    localStorage.setItem('user', JSON.stringify(payload))
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('POST', "https://reqres.in/api/register")
+
+    xhr.onload = function () {
+        console.log(this.response)
+        if (this.status === 200) {
+            handleSuccessLogin(JSON.parse(this.response))
+        } else {
+            handleError(JSON.parse(this.response))
+        }
+    }
+
+    xhr.onerror = function () {
+        alert('onerror')
+    }
+
+    xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
+
+    xhr.send(JSON.stringify(payload))
+
+}
+
+function handleSuccessLogin(response) {
+
+    location.href = "./component/data.html"
+    var token = response.token
+
+    var pay = {
+        token: token
+    }
+    localStorage.setItem('token', JSON.stringify(pay))
+    console.log(token)
+
+}
+
+function handleError(response) {
+
+    var error = response.error
+    alert(error)
+}
+
+
+function getUserList() {
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('GET', 'https://reqres.in/api/users?page=1')
+
+    xhr.send()
+
+    xhr.onload = function () {
+
+        var response = JSON.parse(this.response)
+        console.log(response)
+        console.log(response.data)
+
+    }
+
+}
+</script>
