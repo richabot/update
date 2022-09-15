@@ -7,76 +7,25 @@
     <title>Document</title>
 </head>
 <body>
-   <form >
-    <input type="text" name="name" id="name">
-    <input type="text" name="age" id="age">
-    <input type="text" name="place" id="place">
-	<select id="batch">
-		<option value="">--</option>
-		<option value="Web-14">Web-14</option>
-		<option value="Web-15">Web-15</option>
-        <option value="Web-16">Web-16</option>
-	</select>
-    <select id="profession">
-		<option value="">--</option>
-		<option value="Frontend">Frontend</option>
-		<option value="Backend">Backend</option>
-        <option value="FSD">FSD</option>
-	</select>
-
-	<input type="submit" id="submit">
-
-   </form>
+    <div><button onclick="userSection()">USER SECTION</button></div>
+    <div><button onclick="adminSection()">ADMIN SECTION</button></div>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
 <script>
+    function userSection() {
+  window.location.href = "./register.html";
+}
 
-
-
-
-const arr=[];
-   document.querySelector("#submit").addEventListener("click", submit);
-  async function submit(event){
-   event.preventDefault();
-  
-        var name=document.querySelector("#name").value
-        var age=document.querySelector("#age").value
-        var place=document.querySelector("#place").value
-        var batch=document.querySelector("#batch").value
-        var profession=document.querySelector("#profession").value
-    
-     
-  function student(){
-      this.name=name,
-      this.age=age,
-      this.place=place,
-      this.batch=batch,
-      this.profession=profession
-  };
-  const stud1=new student(name,age,place,batch,profession);
-  arr.push(stud1);
-  
-  const rawResponse = await fetch('https://powerful-harbor-33230.herokuapp.com/posts', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({...stud1})
-  });
-  const content = await rawResponse.json();
-
-  console.log(content);
-};
-
-
-
-
-
-
-
-
-
-
-
+function adminSection() {
+    window.location.href = "../admin.html";
+  }
 </script>
